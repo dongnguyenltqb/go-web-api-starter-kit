@@ -1,8 +1,8 @@
 server:
   port: 8080
   allow_host:
-    - "http://localhost:5000"
+    - "*"
 
 mongodb:
-  url: "mongodb://localhost/"
+  url: "mongodb://docker:123456@mongox1:27017/ganja"
   db: "ganja"

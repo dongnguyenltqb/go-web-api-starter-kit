@@ -16,10 +16,11 @@ RUN go mod download
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-w -s"
 
 FROM scratch
+WORKDIR /app
 COPY --from=builder /etc/passwd /etc/passwd
 COPY --from=builder /etc/group /etc/group
-COPY --from==builder /app/config.yaml /app/config.yaml
-COPY --from=builder /app/ganja app/ganja
+COPY --from=builder /app/config.yaml .
+COPY --from=builder /app/ganja .
 USER appuser:appuser
 EXPOSE 8080
-ENTRYPOINT ["/app/ganja","server"]
+ENTRYPOINT ["/app/ganja","server","--config","config.yaml"]

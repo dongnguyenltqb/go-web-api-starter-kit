@@ -1,0 +1,20 @@
+version: '3'
+services:
+  mongox1:
+    image: mongo
+    container_name: mongox1
+    environment:
+      - MONGO_INITDB_DATABASE=ganja
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=123
+    ports:
+      - "27018:27017"
+    volumes:
+      - "mongox1:/data/db"
+      - ./mongo-docker-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+  backend:
+    build: .
+    ports:
+      - "8080:8080"
+volumes:
+  mongox1:
