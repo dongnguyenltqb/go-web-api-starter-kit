@@ -1,0 +1,8 @@
+server:
+  port: 8080
+  allow_host:
+    - "http://localhost:5000"
+
+mongodb:
+  url: "mongodb://localhost/"
+  db: "ganja"
