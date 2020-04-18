@@ -4,5 +4,5 @@ server:
     - "*"
 
 mongodb:
-  url: "mongodb://docker:123456@mongox1:27017/ganja"
+  url: "mongodb://localhost:27017/ganja"
   db: "ganja"
