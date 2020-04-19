@@ -3,9 +3,9 @@ package infra
 import (
 	"context"
 	"errors"
-	"fmt"
 	"time"
 
+	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -32,11 +32,14 @@ func setupMongo() {
 	if err != nil {
 		panic(err)
 	}
-	ctx, _ := context.WithTimeout(context.Background(), 5*time.Second)
-	if err = client.Connect(ctx); err != nil {
+	if err = client.Connect(context.Background()); err != nil {
 		panic(err)
 	}
-	fmt.Println("Setup MongoDB sucessfully...")
+	ctx, _ := context.WithTimeout(context.Background(), 5*time.Second)
+	if err = client.Ping(ctx, nil); err != nil {
+		panic(err)
+	}
+	logrus.Info("Setup MongoDB sucessfully...")
 	db = client.Database(dbName)
 }
 
