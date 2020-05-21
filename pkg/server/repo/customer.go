@@ -1,11 +1,7 @@
 package repo
 
 import (
-	"context"
-	"ganja/pkg/infra"
 	"ganja/pkg/server/entity"
-
-	"go.mongodb.org/mongo-driver/bson"
 )
 
 type CustomerRepoInterface interface {
@@ -13,20 +9,25 @@ type CustomerRepoInterface interface {
 }
 
 type customerRepo struct {
+	base
 }
 
 func GetCustomerRepo() CustomerRepoInterface {
 	return &customerRepo{}
 }
 
-func (*customerRepo) GetById(id string) (c *entity.Customer, err error) {
-	customerCollection := infra.GetDB().Collection("customers")
-	var cus entity.Customer
-	if err = customerCollection.FindOne(context.Background(), bson.M{
-		"customer_id": id,
-	}).Decode(&cus); err != nil {
-		return
-	}
-	c = &cus
-	return
+func (r *customerRepo) GetById(id string) (*entity.Customer, error) {
+	// customerCollection := infra.GetDB().Collection("customers")
+	// var cus entity.Customer
+	// if err = customerCollection.FindOne(context.Background(), bson.M{
+	// 	"customer_id": id,
+	// }).Decode(&cus); err != nil {
+	// 	return
+	// }
+	// c = &cus
+	// return
+	c := &entity.Customer{}
+	var err error
+	err = r.getById(id, c)
+	return c, err
 }
